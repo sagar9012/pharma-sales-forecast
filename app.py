@@ -3,7 +3,6 @@ PharmaCast - Pharma sales forecasting & inventory planning dashboard.
 Run locally:  streamlit run app.py
 """
 import json
-import subprocess
 import sys
 from pathlib import Path
 
@@ -44,10 +43,23 @@ def style(fig, h=380):
     return fig
 
 
+REQUIRED_DATA = [ROOT / "data" / "salesweekly.csv", ROOT / "data" / "salesdaily.csv"]
+REQUIRED_OUT = [OUT / f for f in ("metrics.csv", "backtest.csv", "future_forecast.csv", "summary.json")]
+
+missing_data = [str(p.relative_to(ROOT)) for p in REQUIRED_DATA if not p.exists()]
+if missing_data:
+    st.error("These data files are missing from the repository: " + ", ".join(missing_data)
+             + ". Upload the `data` folder to GitHub and reboot the app.")
+    st.stop()
+
+if any(not p.exists() for p in REQUIRED_OUT):  # outputs not uploaded: build them once, in-process
+    with st.spinner("First run: training the models (about 1 minute)..."):
+        import pipeline
+        pipeline.main()
+
+
 @st.cache_data
 def load_all():
-    if not (OUT / "metrics.csv").exists():  # first run on a fresh machine
-        subprocess.run([sys.executable, str(ROOT / "src" / "pipeline.py")], check=True)
     wide = load_weekly()
     daily = pd.read_csv(ROOT / "data" / "salesdaily.csv")
     daily["datum"] = pd.to_datetime(daily["datum"], format="%m/%d/%Y")
