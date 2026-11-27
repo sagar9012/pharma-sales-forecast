@@ -1,6 +1,6 @@
 # 💊 PharmaCast: Pharma Sales Forecasting & Inventory Planner
 
-**Live demo:** `<paste your Streamlit link here>`
+**Live demo:** `https://pharmacast-sagar.streamlit.app/`
 
 An end-to-end data science project that forecasts weekly demand for 8 drug categories,
 compares simple baselines with statistical and machine-learning models, and turns the forecast
