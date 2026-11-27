@@ -1,0 +1,18 @@
+{
+  "data_start": "2014-01-05",
+  "data_end": "2019-10-06",
+  "n_weeks": 301,
+  "horizon_weeks": 4,
+  "test_weeks": 52,
+  "future_weeks": 12,
+  "best_model_by_category": {
+    "M01AB": "Ensemble (HW + LightGBM)",
+    "M01AE": "Ensemble (HW + LightGBM)",
+    "N02BA": "Ensemble (HW + LightGBM)",
+    "N02BE": "Ensemble (HW + LightGBM)",
+    "N05B": "LightGBM",
+    "N05C": "Moving average (4w)",
+    "R03": "Moving average (4w)",
+    "R06": "Holt-Winters"
+  }
+}
